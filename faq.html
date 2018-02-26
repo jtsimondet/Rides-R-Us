@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="w3.css">
+<body style="background-color:rgb(70,30,30);">
+<style>
+  #backcolor{
+	 color: rgb(70,30,30);
+  }
+	
+  #forecolor{
+	 color: rgb(198,159,61);
+  }
+</style>
+
+<!-- Navigation -->
+<nav class="w3-bar w3-black">
+  <a href="#home" class="w3-button w3-bar-item" style="font-size: 19px; color: rgb(198,158,61)">
+    Home
+  </a>
+  <a href="login.html" class="w3-button w3-bar-item" style="font-size: 19px; color: rgb(198,158,61)">
+    Login/Sign up
+  </a>
+  <a href="#contact" class="w3-button w3-bar-item" style="font-size: 19px; color: rgb(198,158,61)">
+    Contact
+  </a>
+  <a href="#help" class="w3-button w3-bar-item" style="font-size: 19px; color: rgb(198,158,61)">
+    Help
+  </a>
+</nav>
+
+<!-- Quick Schedule -->
+<section class="w3-container w3-center w3-content" style="max-width:600px;">
+  <p class="w3-justify" style="font-size: 19px;">
+	<div style="color: rgb(255,255,255)">
+	FAQ:
+	
+	Nothing yet.
+  </p>
+</section>
+
+<!-- Footer -->
+<footer class="w3-container w3-padding-12 w3-center w3-xlarge" style="background-color: rgb(70,30,30)">
+  <style>
+	a:link {
+		color: white; 
+		background-color: transparent; 
+		text-decoration: none;
+	}
+
+	a:visited {
+		color: grey;
+		background-color: transparent;
+		text-decoration: none;
+	}
+
+	a:hover {
+		color: blue;
+		background-color: transparent;
+		text-decoration: underline;
+	}
+
+	a:active {
+		color: black;
+		background-color: transparent;
+		text-decoration: underline;
+	}
+</style>
+  <a href="#home" class="w3-justify w3-center">
+	<div style="height:10px;"></div>
+    <img src="smallestlogo.png" alt="company logo" class="imglogo" style="width:77px;height:76px">
+	<p style="font-size:50%;">Ride's R Us</p>
+  </a>
+</footer>
+
+<script>
+// Automatic Slideshow - change image every 3 seconds
+var myIndex = 0;
+carousel();
+
+function carousel() {
+    var i;
+    var x = document.getElementsByClassName("mySlides");
+    for (i = 0; i < x.length; i++) {
+       x[i].style.display = "none";
+    }
+    myIndex++;
+    if (myIndex > x.length) {myIndex = 1}
+    x[myIndex-1].style.display = "block";
+    setTimeout(carousel, 3000);
+}
+</script>
+
+</body>
+</html>
+
