@@ -16,21 +16,22 @@
 
 <!-- Navigation -->
 <nav class="w3-bar w3-black">
-  <a href="#home" class="w3-button w3-bar-item" style="font-size: 19px; color: rgb(198,158,61)">
+  <a href="homepage.html" class="w3-button w3-bar-item" style="font-size: 19px; color: rgb(198,158,61)">
     Home
   </a>
-  <a href="login.html" class="w3-button w3-bar-item" style="font-size: 19px; color: rgb(198,158,61)">
-    Login/Sign up
+  <a href="usrLogin_C.html" class="w3-button w3-bar-item" style="font-size: 19px; color: rgb(198,158,61)">
+    Login/Sign-up
   </a>
-  <a href="#contact" class="w3-button w3-bar-item" style="font-size: 19px; color: rgb(198,158,61)">
+  <a href="contact.html" class="w3-button w3-bar-item" style="font-size: 19px; color: rgb(198,158,61)">
     Contact
   </a>
   <a href="faq.html" class="w3-button w3-bar-item" style="font-size: 19px; color: rgb(198,158,61)">
-    Help
+    FAQ
   </a>
 </nav>
 
 <!-- Slide Show -->
+
 <section class="w3-container w3-padding-12 w3-center w3-black w3-xlarge">
   <img class="mySlides" src="images/slide1.png"
   style="align:center;width:100%;height:500px;">
@@ -45,18 +46,49 @@
   </div>
 </section>
 
-<!-- Quick Schedule -->
-<section class="w3-container w3-center w3-content" style="max-width:600px;">
-  <h2 class="w3-wide" style="color: rgb(255,255,255)">RIDES R US</h2>
-  <p class="w3-opacity" style="color: rgb(255,255,255)"><i>Rides fast.</i></p>
-  <a href="#schedule" class="w3-justify" style="font-size: 19px;">
-    <img src="images/schedule.png" alt="schedule" style="align:center; width:200px; height:200px;">
-	<div style="color: rgb(255,255,255)">
-	Schedule a trip quickly as a guest.
-  </a>
-  <p class="w3-justify"></p>
-</section>
+ 
 
+<!-- Main Actions -->
+<div style="background-color:navy;color:white;padding:20px;">
+  <h2><center>Schedule trip</center></h2>
+  <div style="background-color:white;color:navy;padding:20px;">
+    <p>Book now</p>
+    <p>
+            <form>
+                    <strong>From</strong>     &nbsp;  &nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="text" name="to" value = "Enter a town, city or zipcode" size = 35>
+                    <strong>Leaving</strong>
+                    &nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="text" name="from" value = "Enter a town, city or zipcode" size = 35>
+                    <br>
+					<strong>At</strong>
+                    &nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="datetime-local" name="leaving">
+					&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <strong>At</strong>
+                    &nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="datetime-local" name="leaving">
+            </form>
+            <form>
+                    <br><strong>How many travelers</strong><br>
+                    <input type="number" name="quantity" min="1" max="30" value="1"><br><br>
+                    <input type="checkbox" > Need handicap bus <br><br>
+                    <a href="afterscheduletrip.html">
+					<input style="height:50px;width:200px" type="button"  value="Schedule Trip!">
+					</a>
+			</form>
+    </p>
+
+  </div>
+</div>   
+  
+  
+</section>  
+  
 <!-- Guide -->
 <section class="w3-row-padding w3-center w3-light-grey">
   <article class="w3-third" style="width:30%">
@@ -88,7 +120,7 @@
 <footer class="w3-container w3-padding-12 w3-center w3-xlarge" style="background-color: rgb(70,30,30)">
   <style>
 	a:link {
-		color: white; 
+		color: black; 
 		background-color: transparent; 
 		text-decoration: none;
 	}
@@ -100,18 +132,18 @@
 	}
 
 	a:hover {
-		color: blue;
+		color: black;
 		background-color: transparent;
 		text-decoration: underline;
 	}
 
 	a:active {
-		color: black;
+		color: blue;
 		background-color: transparent;
 		text-decoration: underline;
 	}
 </style>
-  <a href="homepage.html" class="w3-justify w3-center">
+  <a href="#home" class="w3-justify w3-center">
 	<div style="height:10px;"></div>
     <img src="images/smallestlogo.png" alt="company logo" class="imglogo" style="width:77px;height:76px">
 	<p style="font-size:50%;">Ride's R Us</p>
@@ -133,6 +165,36 @@ function carousel() {
     if (myIndex > x.length) {myIndex = 1}
     x[myIndex-1].style.display = "block";
     setTimeout(carousel, 3000);
+}
+</script>
+
+<script>
+function includeHTML() {
+  var z, i, elmnt, file, xhttp;
+  /*loop through a collection of all HTML elements:*/
+  z = document.getElementsByTagName("*");
+  for (i = 0; i < z.length; i++) {
+    elmnt = z[i];
+    /*search for elements with a certain atrribute:*/
+    file = elmnt.getAttribute("w3-include-html");
+    if (file) {
+      /*make an HTTP request using the attribute value as the file name:*/
+      xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4) {
+          if (this.status == 200) {elmnt.innerHTML = this.responseText;}
+          if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
+          /*remove the attribute, and call this function once more:*/
+          elmnt.removeAttribute("w3-include-html");
+          includeHTML();
+        }
+      } 
+      xhttp.open("GET", file, true);
+      xhttp.send();
+      /*exit the function:*/
+      return;
+    }
+  }
 }
 </script>
 
