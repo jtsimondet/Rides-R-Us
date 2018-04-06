@@ -78,7 +78,7 @@
 		}
 		if($phone_number > 10000000000 && $phone_number < 999999999)
 		{
-			array_push($errors, "error format of phone number");
+			array_push($errors, "phone number must be 10 digits");
 		}
 		if(strlen($email) > 40)
 		{
@@ -163,7 +163,7 @@
 		}
 		if($phone_number > 10000000000 && $phone_number < 999999999)
 		{
-			array_push($errors, "error format of phone number");
+			array_push($errors, "phone number must be 10 digits");
 		}
 		if(strlen($email) > 40)
 		{
@@ -175,10 +175,10 @@
 			$query = "UPDATE Customer SET firstName = '$first_name', lastName = '$last_name' , phoneNo = '$phone_number', emailAddr = '$email_address' WHERE customerID = '$username'" ;
 
 			if (mysqli_query($db, $query)) {
-				$_SESSION['success'] = "Change profile successfully";
+				$_SESSION['success'] = "Edit profile successfully";
 				header('location: index.php');
 			}else {
-				array_push($errors, "can't change your profile, please contact the network administrator");
+				array_push($errors, "can't edit your profile, please contact the network administrator");
 			}
 
 		}

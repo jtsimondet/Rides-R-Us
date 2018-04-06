@@ -17,12 +17,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Change profile</title>
+	<title>Edit profile</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
 	<div class="header">
-		<h2>Change profile Page</h2>
+		<h2>Edit profile Page</h2>
 	</div>
 	<div class="content">
 

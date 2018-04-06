@@ -38,4 +38,51 @@
 		}
 	}
 
+		// change profile
+	if(isset($_POST['change_profile']))
+	{
+		$username = $_SESSION['username'];
+		$first_name = mysqli_real_escape_string($db, $_POST['first_name']);
+		$last_name = mysqli_real_escape_string($db, $_POST['last_name']);
+		$phone_number = mysqli_real_escape_string($db, $_POST['phone_number']);
+
+
+		if (empty($first_name)) {
+			array_push($errors, "first name is required");
+		}
+		if (empty($last_name)) {
+			array_push($errors, "last name is required");
+		}
+		if (empty($phone_number)) {
+			array_push($errors, "phone number is required");
+		}
+		
+
+		if(strlen($first_name) > 20)
+		{
+			array_push($errors, "first name should be less than 20 characters");
+		}
+		if(strlen($last_name) > 20)
+		{
+			array_push($errors, "last name should be less than 20 characters");
+		}
+		if($phone_number > 10000000000 && $phone_number < 999999999)
+		{
+			array_push($errors, "phone number must be 10 digits");
+		}
+
+		if (count($errors) == 0) 
+		{
+			$query = "UPDATE Driver SET firstName = '$first_name', lastName = '$last_name' , phoneNo = '$phone_number' WHERE driverID = '$username'" ;
+
+			if (mysqli_query($db, $query)) {
+				$_SESSION['success'] = "Edit profile successfully";
+				header('location: index.php');
+			}else {
+				array_push($errors, "can't edit your profile, please contact the network administrator");
+			}
+
+		}
+	}
+
 ?>

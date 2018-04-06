@@ -64,10 +64,10 @@
 			$query = "UPDATE Admin SET firstName = '$first_name', lastName = '$last_name' WHERE adminID = '$username'" ;
 
 			if (mysqli_query($db, $query)) {
-				$_SESSION['success'] = "Change profile successfully";
+				$_SESSION['success'] = "Edit profile successfully";
 				header('location: index.php');
 			}else {
-				array_push($errors, "can't change your profile, please contact the network administrator");
+				array_push($errors, "can't edit your profile, please contact the network administrator");
 			}
 
 		}
@@ -180,13 +180,13 @@
 		}
 		if($phone_number > 10000000000 && $phone_number < 999999999)
 		{
-			array_push($errors, "error format of phone number");
+			array_push($errors, "phone number must be 10 digits");
 		}
 
 		// register user if there are no errors in the form
 		if (count($errors) == 0) {
 			$password = md5($password_1);//encrypt the password before saving in the database
-			$query = "INSERT INTO Driver (driverID, driverPWD, fristName, lastName, phoneNo) 
+			$query = "INSERT INTO Driver (driverID, driverPWD, firstName, lastName, phoneNo) 
 					  VALUES('$username', '$password', '$first_name', '$last_name', '$phone_number')";
 
 			mysqli_query($db, $query);
