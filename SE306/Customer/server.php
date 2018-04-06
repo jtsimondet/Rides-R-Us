@@ -80,7 +80,7 @@
 		{
 			array_push($errors, "error format of phone number");
 		}
-		if(strlen($email) > 20)
+		if(strlen($email) > 40)
 		{
 			array_push($errors, "email should be less than 40 characters");
 		}
@@ -128,5 +128,106 @@
 			}
 		}
 	}
+
+	// change profile
+	if(isset($_POST['change_profile']))
+	{
+		$username = $_SESSION['username'];
+		$first_name = mysqli_real_escape_string($db, $_POST['first_name']);
+		$last_name = mysqli_real_escape_string($db, $_POST['last_name']);
+		$phone_number = mysqli_real_escape_string($db, $_POST['phone_number']);
+		$email_address = mysqli_real_escape_string($db, $_POST['email_address']);
+
+
+		if (empty($first_name)) {
+			array_push($errors, "first name is required");
+		}
+		if (empty($last_name)) {
+			array_push($errors, "last name is required");
+		}
+		if (empty($phone_number)) {
+			array_push($errors, "phone number is required");
+		}
+		if (empty($email_address)) {
+			array_push($errors, "email address is required");
+		}
+		
+
+		if(strlen($first_name) > 20)
+		{
+			array_push($errors, "first name should be less than 20 characters");
+		}
+		if(strlen($last_name) > 20)
+		{
+			array_push($errors, "last name should be less than 20 characters");
+		}
+		if($phone_number > 10000000000 && $phone_number < 999999999)
+		{
+			array_push($errors, "error format of phone number");
+		}
+		if(strlen($email) > 40)
+		{
+			array_push($errors, "email should be less than 40 characters");
+		}
+
+		if (count($errors) == 0) 
+		{
+			$query = "UPDATE Customer SET firstName = '$first_name', lastName = '$last_name' , phoneNo = '$phone_number', emailAddr = '$email_address' WHERE customerID = '$username'" ;
+
+			if (mysqli_query($db, $query)) {
+				$_SESSION['success'] = "Change profile successfully";
+				header('location: index.php');
+			}else {
+				array_push($errors, "can't change your profile, please contact the network administrator");
+			}
+
+		}
+	}
+
+		// reset password
+		if(isset($_POST['reset_password']))
+		{
+			$username = $_SESSION['username'];
+			$reset_password1 = mysqli_real_escape_string($db, $_POST['reset_password1']);
+			$reset_password2 = mysqli_real_escape_string($db, $_POST['reset_password2']);
+	
+			if (empty($reset_password1)) {
+				array_push($errors, "Please enter your password");
+			}
+			if (empty($reset_password2)) {
+				array_push($errors, "Please confirm your password");
+			}
+	
+			if ($reset_password1 != $reset_password2) {
+				array_push($errors, "The two passwords do not match");
+			}
+			else
+			{
+				if(strlen($reset_password1) > 20)
+				{
+					array_push($errors, "password should be less than 20 characters");
+				}
+				if(strlen($reset_password1) < 8)
+				{
+					array_push($errors, "password should be greater than 8 characters");
+				}
+			}
+	
+	
+	
+			if (count($errors) == 0) 
+			{
+				$password = md5($reset_password1);
+				$query = "UPDATE Customer SET CustomerPWD = '$password' WHERE customerID = '$username'" ;
+	
+				if (mysqli_query($db, $query)) {
+					$_SESSION['success'] = "Reset password successfully";
+					header('location: index.php');
+				}else {
+					array_push($errors, "can't reset your password, please contact the network administrator");
+				}
+	
+			}
+		}
 
 ?>

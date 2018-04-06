@@ -113,7 +113,7 @@
 				$_SESSION['success'] = "Reset password successfully";
 				header('location: index.php');
 			}else {
-				array_push($errors, "can't change your profile, please contact the network administrator");
+				array_push($errors, "can't reset your password, please contact the network administrator");
 			}
 
 		}
