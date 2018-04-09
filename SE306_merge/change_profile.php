@@ -47,7 +47,7 @@
 				<input type="email" name="email_address">
 			</div>
 			<div class="input-group">
-				<button type="submit" class="btn" name="customer_change_profile">submit</button>
+				<button type="submit" class="btn" name="profile_change">submit</button>
 			</div>
 		</form>
 	<?php endif ?>
@@ -65,7 +65,7 @@
 				<input type="text" name="last_name">
 			</div>
 			<div class="input-group">
-				<button type="submit" class="btn" name="admin_change_profile.php">submit</button>
+				<button type="submit" class="btn" name="profile_change">submit</button>
 			</div>
 		</form>
 	<?php endif ?>
@@ -91,7 +91,7 @@
 				<input type="email" name="email_address">
 			</div>
 			<div class="input-group">
-				<button type="submit" class="btn" name="driver_change_profile.php">submit</button>
+				<button type="submit" class="btn" name="profile_change">submit</button>
 			</div>
 		</form>
 	<?php endif ?>

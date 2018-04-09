@@ -172,7 +172,7 @@
 		}
 
 		if (count($errors) == 0) {
-			//$password = md5($password);
+			$password = md5($password);
 			$query = "SELECT * FROM Admin WHERE adminID='$username' AND adminPWD='$password'";
 			$results = mysqli_query($db, $query);
 
@@ -187,15 +187,17 @@
 		}
 	}
 	
-	// customer change profile
-	if(isset($_POST['customer_change_profile']))
+	// merged change profile
+	if(isset($_POST['profile_change']))
 	{
+		echo $_SESSION['role'];
 		$username = $_SESSION['username'];
 		$first_name = mysqli_real_escape_string($db, $_POST['first_name']);
 		$last_name = mysqli_real_escape_string($db, $_POST['last_name']);
-		$phone_number = mysqli_real_escape_string($db, $_POST['phone_number']);
-		$email_address = mysqli_real_escape_string($db, $_POST['email_address']);
-
+		if($_SESSION['role'] == 'customer' OR $_SESSION['role'] == 'driver'){
+			$phone_number = mysqli_real_escape_string($db, $_POST['phone_number']);
+			$email_address = mysqli_real_escape_string($db, $_POST['email_address']);
+		}
 
 		if (empty($first_name)) {
 			array_push($errors, "first name is required");
@@ -203,11 +205,13 @@
 		if (empty($last_name)) {
 			array_push($errors, "last name is required");
 		}
-		if (empty($phone_number)) {
-			array_push($errors, "phone number is required");
-		}
-		if (empty($email_address)) {
-			array_push($errors, "email address is required");
+		if($_SESSION['role'] == 'customer' OR $_SESSION['role'] == 'driver'){
+			if (empty($phone_number)) {
+				array_push($errors, "phone number is required");
+			}
+			if (empty($email_address)) {
+				array_push($errors, "email address is required");
+			}
 		}
 		
 
@@ -219,73 +223,28 @@
 		{
 			array_push($errors, "last name should be less than 20 characters");
 		}
-		if($phone_number > 10000000000 && $phone_number < 999999999)
-		{
-			array_push($errors, "error format of phone number");
-		}
-		if(strlen($email) > 40)
-		{
-			array_push($errors, "email should be less than 40 characters");
-		}
-
-		if (count($errors) == 0) 
-		{
-			$query = "UPDATE Customer SET firstName = '$first_name', lastName = '$last_name' , phoneNo = '$phone_number', emailAddr = '$email_address' WHERE customerID = '$username'" ;
-
-			if (mysqli_query($db, $query)) {
-				$_SESSION['success'] = "Change profile successfully";
-				header('location: index.php');
-			}else {
-				array_push($errors, "can't change your profile, please contact the network administrator");
-			}
-
-		}
-	}
-	
-	// driver change profile
-	if(isset($_POST['driver_change_profile']))
-	{
-		$username = $_SESSION['username'];
-		$first_name = mysqli_real_escape_string($db, $_POST['first_name']);
-		$last_name = mysqli_real_escape_string($db, $_POST['last_name']);
-		$phone_number = mysqli_real_escape_string($db, $_POST['phone_number']);
-		$email_address = mysqli_real_escape_string($db, $_POST['email_address']);
-
-
-		if (empty($first_name)) {
-			array_push($errors, "first name is required");
-		}
-		if (empty($last_name)) {
-			array_push($errors, "last name is required");
-		}
-		if (empty($phone_number)) {
-			array_push($errors, "phone number is required");
-		}
-		if (empty($email_address)) {
-			array_push($errors, "email address is required");
-		}
 		
-
-		if(strlen($first_name) > 20)
-		{
-			array_push($errors, "first name should be less than 20 characters");
-		}
-		if(strlen($last_name) > 20)
-		{
-			array_push($errors, "last name should be less than 20 characters");
-		}
-		if($phone_number > 10000000000 && $phone_number < 999999999)
-		{
-			array_push($errors, "error format of phone number");
-		}
-		if(strlen($email) > 40)
-		{
-			array_push($errors, "email should be less than 40 characters");
+		if($_SESSION['role'] == 'customer' OR $_SESSION['role'] == 'driver'){
+			if($phone_number > 10000000000 && $phone_number < 999999999)
+			{
+				array_push($errors, "error format of phone number");
+			}
+			if(strlen($email) > 40)
+			{
+				array_push($errors, "email should be less than 40 characters");
+			}
 		}
 
 		if (count($errors) == 0) 
 		{
-			$query = "UPDATE Customer SET firstName = '$first_name', lastName = '$last_name' , phoneNo = '$phone_number', emailAddr = '$email_address' WHERE customerID = '$username'" ;
+			if($_SESSION['role'] == 'customer'){
+				$query = "UPDATE Customer SET firstName = '$first_name', lastName = '$last_name' , phoneNo = '$phone_number', emailAddr = '$email_address' WHERE customerID = '$username'" ;
+			} else if($_SESSION['role'] == 'driver'){
+				$query = "UPDATE Druver SET firstName = '$first_name', lastName = '$last_name' , phoneNo = '$phone_number', emailAddr = '$email_address' WHERE driverID = '$username'" ;
+			} else if($_SESSION['role'] == 'admin'){
+				$query = "UPDATE Admin SET firstName = '$first_name', lastName = '$last_name' WHERE adminID = '$username'" ;
+			}
+			
 
 			if (mysqli_query($db, $query)) {
 				$_SESSION['success'] = "Change profile successfully";
@@ -297,43 +256,6 @@
 		}
 	}
 	
-	// admin change profile
-	if(isset($_POST['admin_change_profile']))
-	{
-		$username = $_SESSION['username'];
-		$first_name = mysqli_real_escape_string($db, $_POST['first_name']);
-		$last_name = mysqli_real_escape_string($db, $_POST['last_name']);
-
-		if (empty($first_name)) {
-			array_push($errors, "first name is required");
-		}
-		if (empty($last_name)) {
-			array_push($errors, "last name is required");
-		}
-
-		if(strlen($first_name) > 20)
-		{
-			array_push($errors, "first name should be less than 20 characters");
-		}
-		if(strlen($last_name) > 20)
-		{
-			array_push($errors, "last name should be less than 20 characters");
-		}
-
-		if (count($errors) == 0) 
-		{
-			$query = "UPDATE Admin SET firstName = '$first_name', lastName = '$last_name' WHERE adminID = '$username'" ;
-
-			if (mysqli_query($db, $query)) {
-				$_SESSION['success'] = "Change profile successfully";
-				header('location: index.php');
-			}else {
-				array_push($errors, "can't change your profile, please contact the network administrator");
-			}
-
-		}
-	}
-
 	// reset password
 	if(isset($_POST['reset_password']))
 	{

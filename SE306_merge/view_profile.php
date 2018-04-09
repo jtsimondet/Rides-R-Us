@@ -1,6 +1,5 @@
 <?php include('server.php') ?>
 <?php 
-	//$db = mysqli_connect('localhost', 'root', '999555aa', 'ridesrus');
 	//session_start(); 
 
 	if (!isset($_SESSION['username'])) {
@@ -99,7 +98,7 @@
 	</form>
 	
 		<div class="input-group">
-        <p> <a href="Change_profile.php" style="color: blue;">Edit profile</a> </p>
+        <p> <a href="change_profile.php" style="color: blue;">Edit profile</a> </p>
         <p> <a href="index.php" style="color: blue;">home page</a> </p>
 		</div>
 
