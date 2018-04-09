@@ -334,56 +334,56 @@
 		}
 	}
 
-		// reset password
-		if(isset($_POST['reset_password']))
+	// reset password
+	if(isset($_POST['reset_password']))
+	{
+		$username = $_SESSION['username'];
+		$reset_password1 = mysqli_real_escape_string($db, $_POST['reset_password1']);
+		$reset_password2 = mysqli_real_escape_string($db, $_POST['reset_password2']);
+
+		if (empty($reset_password1)) {
+			array_push($errors, "Please enter your password");
+		}
+		if (empty($reset_password2)) {
+			array_push($errors, "Please confirm your password");
+		}
+
+		if ($reset_password1 != $reset_password2) {
+			array_push($errors, "The two passwords do not match");
+		}
+		else
 		{
-			$username = $_SESSION['username'];
-			$reset_password1 = mysqli_real_escape_string($db, $_POST['reset_password1']);
-			$reset_password2 = mysqli_real_escape_string($db, $_POST['reset_password2']);
-	
-			if (empty($reset_password1)) {
-				array_push($errors, "Please enter your password");
-			}
-			if (empty($reset_password2)) {
-				array_push($errors, "Please confirm your password");
-			}
-	
-			if ($reset_password1 != $reset_password2) {
-				array_push($errors, "The two passwords do not match");
-			}
-			else
+			if(strlen($reset_password1) > 20)
 			{
-				if(strlen($reset_password1) > 20)
-				{
-					array_push($errors, "password should be less than 20 characters");
-				}
-				if(strlen($reset_password1) < 8)
-				{
-					array_push($errors, "password should be greater than 8 characters");
-				}
+				array_push($errors, "password should be less than 20 characters");
 			}
-	
-	
-	
-			if (count($errors) == 0) 
+			if(strlen($reset_password1) < 8)
 			{
-				$password = md5($reset_password1);
-				if($_SESSION['role'] == 'customer'){
-					$query = "UPDATE Customer SET CustomerPWD = '$password' WHERE customerID = '$username'" ;
-				} else if($_SESSION['role'] == 'driver'){
-					$query = "UPDATE Driver SET driverPWD = '$password' WHERE driverID = '$username'" ;
-				} else if($_SESSION['role'] == 'admin'){
-					$query = "UPDATE Admin SET adminPWD = '$password' WHERE adminID = '$username'" ;
-				}
-	
-				if (mysqli_query($db, $query)) {
-					$_SESSION['success'] = "Reset password successfully";
-					header('location: index.php');
-				}else {
-					array_push($errors, "can't reset your password, please contact the network administrator");
-				}
-	
+				array_push($errors, "password should be greater than 8 characters");
 			}
 		}
+
+
+
+		if (count($errors) == 0) 
+		{
+			$password = md5($reset_password1);
+			if($_SESSION['role'] == 'customer'){
+				$query = "UPDATE Customer SET CustomerPWD = '$password' WHERE customerID = '$username'" ;
+			} else if($_SESSION['role'] == 'driver'){
+				$query = "UPDATE Driver SET driverPWD = '$password' WHERE driverID = '$username'" ;
+			} else if($_SESSION['role'] == 'admin'){
+				$query = "UPDATE Admin SET adminPWD = '$password' WHERE adminID = '$username'" ;
+			}
+
+			if (mysqli_query($db, $query)) {
+				$_SESSION['success'] = "Reset password successfully";
+				header('location: index.php');
+			}else {
+				array_push($errors, "can't reset your password, please contact the network administrator");
+			}
+
+		}
+	}
 
 ?>

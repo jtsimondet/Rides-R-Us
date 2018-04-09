@@ -52,7 +52,7 @@
 		</form>
 	<?php endif ?>
 	
-	<!-- Customer profile -->
+	<!-- Admin profile -->
 	<?php if($_SESSION['role'] == 'admin') : ?>
 		<form method="post" action="change_profile.php">
 			<?php include('errors.php'); ?>

@@ -42,6 +42,7 @@
 			<p>Welcome <strong><?php echo $_SESSION['username']; ?></strong></p>
 			<p><?php echo $_SESSION['role']; ?>
 			<p> <a href="view_profile.php" style="color: blue;">view profile</a> </p>
+			<p> <a href="reset_password.php" style="color: blue;">reset password</a> </p>
 			<p> <a href="index.php?logout='1'" style="color: red;">logout</a> </p>
 		<?php endif ?>
 		
@@ -57,7 +58,7 @@
 		<?php if($_SESSION['role'] == 'admin') : ?>
 			<p>Welcome <strong><?php echo $_SESSION['username']; ?></strong></p>
 			<p><?php echo $_SESSION['role']; ?>
-			<p> <a href="change_profile.php" style="color: blue;">change profile</a> </p>
+			<p> <a href="view_profile.php" style="color: blue;">view profile</a> </p>
 			<p> <a href="reset_password.php" style="color: blue;">reset password</a> </p>
 			<p> <a href="driver_register.php" style="color: blue;">driver registration</a> </p>
 			<p> <a href="index.php?logout='1'" style="color: red;">logout</a> </p>

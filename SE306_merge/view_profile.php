@@ -1,28 +1,22 @@
 <?php include('server.php') ?>
 <?php 
+	$db = mysqli_connect('localhost', 'root', '999555aa', 'ridesrus');
 	//session_start(); 
 
 	if (!isset($_SESSION['username'])) {
 		$_SESSION['msg'] = "You must log in first";
 		header('location: login.php');
     }
-    else if($_SESSION['role'] == 'customer'){
+    else{
 		$username = $_SESSION['username'];
-        $db = mysqli_connect('localhost', 'root', '999555aa', 'ridesrus');
-        $query = "SELECT * FROM Customer WHERE customerID='$username'";
-        $results = mysqli_query($db, $query);
-        $row = mysqli_fetch_assoc($results);
-	} else if($_SESSION['role'] == 'driver'){
-		$username = $_SESSION['username'];
-        $db = mysqli_connect('localhost', 'root', '999555aa', 'ridesrus');
-        $query = "SELECT * FROM Driver WHERE driverID='$username'";
-        $results = mysqli_query($db, $query);
-        $row = mysqli_fetch_assoc($results);
-	} else if($_SESSION['role'] == 'admin'){
-		$username = $_SESSION['username'];
-        $db = mysqli_connect('localhost', 'root', '999555aa', 'ridesrus');
-        $query = "SELECT * FROM Admin WHERE adminID='$username'";
-        $results = mysqli_query($db, $query);
+		if($_SESSION['role'] == 'customer'){
+			$query = "SELECT * FROM Customer WHERE customerID='$username'";
+		} else if($_SESSION['role'] == 'driver'){
+			$query = "SELECT * FROM Driver WHERE driverID='$username'";
+        } else if($_SESSION['role'] == 'admin'){
+			$query = "SELECT * FROM Admin WHERE adminID='$username'";
+		}
+		$results = mysqli_query($db, $query);
         $row = mysqli_fetch_assoc($results);
 	}
 
@@ -45,7 +39,37 @@
 	</div>
 	<div class="content">
 
+	<?php if($_SESSION['role'] == 'admin') : ?>
+		<div class="input-group">
+			<label>First name: 
+            <?php 
+            echo $row['firstName'];
+            ?> </label>
+		</div>
+		<div class="input-group">
+			<label>Last name:
+			<?php 
+            echo $row['lastName'];
+            ?> </label>
+		</div>
+	<?php endif ?>
+	
+	<?php if($_SESSION['role'] == 'driver') : ?>
+		<div class="input-group">
+			<label>First name: 
+            <?php 
+            echo $row['firstName'];
+            ?> </label>
+		</div>
+		<div class="input-group">
+			<label>Last name:
+			<?php 
+            echo $row['lastName'];
+            ?> </label>
+		</div>
+	<?php endif ?>
 
+	<?php if($_SESSION['role'] == 'customer') : ?>
 		<div class="input-group">
 			<label>First name: 
             <?php 
@@ -70,6 +94,8 @@
             echo $row['emailAddr'];
             ?> </label>
 		</div>
+	<?php endif ?>
+	
 		<div class="input-group">
         <p> <a href="Change_profile.php" style="color: blue;">Edit profile</a> </p>
         <p> <a href="index.php" style="color: blue;">home page</a> </p>
