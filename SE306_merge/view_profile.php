@@ -1,11 +1,11 @@
 <?php include('server.php') ?>
 <?php 
-	$db = mysqli_connect('localhost', 'root', '999555aa', 'ridesrus');
+	//$db = mysqli_connect('localhost', 'root', '999555aa', 'ridesrus');
 	//session_start(); 
 
 	if (!isset($_SESSION['username'])) {
 		$_SESSION['msg'] = "You must log in first";
-		header('location: login.php');
+		header('location: index.php');
     }
     else{
 		$username = $_SESSION['username'];
@@ -39,62 +39,64 @@
 	</div>
 	<div class="content">
 
-	<?php if($_SESSION['role'] == 'admin') : ?>
-		<div class="input-group">
-			<label>First name: 
-            <?php 
-            echo $row['firstName'];
-            ?> </label>
-		</div>
-		<div class="input-group">
-			<label>Last name:
-			<?php 
-            echo $row['lastName'];
-            ?> </label>
-		</div>
-	<?php endif ?>
-	
-	<?php if($_SESSION['role'] == 'driver') : ?>
-		<div class="input-group">
-			<label>First name: 
-            <?php 
-            echo $row['firstName'];
-            ?> </label>
-		</div>
-		<div class="input-group">
-			<label>Last name:
-			<?php 
-            echo $row['lastName'];
-            ?> </label>
-		</div>
-	<?php endif ?>
+	<form method="post" action="view_profile.php">
+		<?php if($_SESSION['role'] == 'admin') : ?>
+			<div class="input-group">
+				<label>First name: 
+				<?php 
+				echo $row['firstName'];
+				?> </label>
+			</div>
+			<div class="input-group">
+				<label>Last name:
+				<?php 
+				echo $row['lastName'];
+				?> </label>
+			</div>
+		<?php endif ?>
+		
+		<?php if($_SESSION['role'] == 'driver') : ?>
+			<div class="input-group">
+				<label>First name: 
+				<?php 
+				echo $row['firstName'];
+				?> </label>
+			</div>
+			<div class="input-group">
+				<label>Last name:
+				<?php 
+				echo $row['lastName'];
+				?> </label>
+			</div>
+		<?php endif ?>
 
-	<?php if($_SESSION['role'] == 'customer') : ?>
-		<div class="input-group">
-			<label>First name: 
-            <?php 
-            echo $row['firstName'];
-            ?> </label>
-		</div>
-		<div class="input-group">
-			<label>Last name:
-			<?php 
-            echo $row['lastName'];
-            ?> </label>
-		</div>
-        <div class="input-group">
-			<label>phone number: 
-			<?php 
-            echo $row['phoneNo'];
-            ?> </label>
-		</div>
-        <div class="input-group">
-			<label>email address:
-			<?php 
-            echo $row['emailAddr'];
-            ?> </label>
-		</div>
-	<?php endif ?>
+		<?php if($_SESSION['role'] == 'customer') : ?>
+			<div class="input-group">
+				<label>First name: 
+				<?php 
+				echo $row['firstName'];
+				?> </label>
+			</div>
+			<div class="input-group">
+				<label>Last name:
+				<?php 
+				echo $row['lastName'];
+				?> </label>
+			</div>
+			<div class="input-group">
+				<label>phone number: 
+				<?php 
+				echo $row['phoneNo'];
+				?> </label>
+			</div>
+			<div class="input-group">
+				<label>email address:
+				<?php 
+				echo $row['emailAddr'];
+				?> </label>
+			</div>
+		<?php endif ?>
+	</form>
 	
 		<div class="input-group">
         <p> <a href="Change_profile.php" style="color: blue;">Edit profile</a> </p>
