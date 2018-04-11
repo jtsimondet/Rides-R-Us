@@ -67,6 +67,25 @@
 				echo $row['lastName'];
 				?> </label>
 			</div>
+			<div class="input-group">
+				<label>Phone number:
+				<?php 
+				echo $row['phoneNo'];
+				?> </label>
+			</div>
+			<div class="input-group">
+				<label>Pay rate:
+				<?php 
+				if (empty($row['payRate']))
+				{
+					echo "your pay rate is not set up yet, please contact your manager.";
+				}
+				else
+				{
+					echo $row['payRate'];
+				}
+				?> </label>
+			</div>
 		<?php endif ?>
 
 		<?php if($_SESSION['role'] == 'customer') : ?>
