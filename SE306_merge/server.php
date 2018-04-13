@@ -1,6 +1,5 @@
 <?php 
 	session_start();
-
 	// variable declaration
 	$username = "";
 	$email    = "";
@@ -8,7 +7,7 @@
 	$_SESSION['success'] = "";
 
 	// connect to database
-	$db = mysqli_connect('127.0.0.1', 'root', 'sunMINXUAN-', 'SE_306');
+	$db = mysqli_connect('localhost', 'root', '999555aa', 'ridesrus');
 
 
 	// REGISTER USER
@@ -21,7 +20,6 @@
 		$first_name = mysqli_real_escape_string($db, $_POST['first_name']);
 		$last_name = mysqli_real_escape_string($db, $_POST['last_name']);
 		$phone_number = mysqli_real_escape_string($db, $_POST['phone_number']);
-
 		// form validation: ensure that the form is correctly filled
 		if (empty($username)) { array_push($errors, "Username is required"); }
 		if (empty($email)) { array_push($errors, "Email is required"); }
@@ -30,11 +28,9 @@
 		if (empty($first_name)) { array_push($errors, "First name is required"); }
 		if (empty($last_name)) { array_push($errors, "last name is required"); }
 		if (empty($phone_number)) { array_push($errors, "phone number is required"); }
-
 		if ($password_1 != $password_2) {
 			array_push($errors, "The two passwords do not match");
 		}
-
 		// first check the database to make sure 
 		// a user does not already exist with the same username and/or email
 		$user_check_query = "SELECT * FROM Customer WHERE customerID='$username' OR emailAddr='$email' LIMIT 1";
@@ -45,12 +41,10 @@
 			if ($user['customerID'] === $username) {
 			array_push($errors, "Username already exists");
 			}
-
 			if ($user['emailAddr'] === $email) {
 			array_push($errors, "email already exists");
 			}
 		}
-
 		// other fields error checking
 		if(strlen($username) > 20)
 		{
@@ -84,42 +78,33 @@
 		{
 			array_push($errors, "email should be less than 40 characters");
 		}
-
 		// register user if there are no errors in the form
 		if (count($errors) == 0) {
 			$password = md5($password_1);//encrypt the password before saving in the database
 			$query = "INSERT INTO Customer (customerID, customerPWD, firstName, lastName, phoneNo, emailAddr) 
 					  VALUES('$username', '$password', '$first_name', '$last_name', '$phone_number', '$email')";
-
 			mysqli_query($db, $query);
-
 			$_SESSION['username'] = $username;
 			$_SESSION['role'] = 'customer';
 			$_SESSION['success'] = "You are now logged in";
 			header('location: index.php');
 		}
-
 	}
-
 	// ... 
-
 	//CUSTOMER LOGIN
 	if (isset($_POST['login_customer'])) {
 		$username = mysqli_real_escape_string($db, $_POST['username']);
 		$password = mysqli_real_escape_string($db, $_POST['password']);
-
 		if (empty($username)) {
 			array_push($errors, "Username is required");
 		}
 		if (empty($password)) {
 			array_push($errors, "Password is required");
 		}
-
 		if (count($errors) == 0) {
 			$password = md5($password);
 			$query = "SELECT * FROM Customer WHERE customerID='$username' AND customerPWD='$password'";
 			$results = mysqli_query($db, $query);
-
 			if (mysqli_num_rows($results) == 1) {
 				$_SESSION['username'] = $username;
 				$_SESSION['role'] = 'customer';
@@ -135,19 +120,16 @@
 	if (isset($_POST['login_driver'])) {
 		$username = mysqli_real_escape_string($db, $_POST['username']);
 		$password = mysqli_real_escape_string($db, $_POST['password']);
-
 		if (empty($username)) {
 			array_push($errors, "Username is required");
 		}
 		if (empty($password)) {
 			array_push($errors, "Password is required");
 		}
-
 		if (count($errors) == 0) {
 			$password = md5($password);
 			$query = "SELECT * FROM Driver WHERE driverID='$username' AND driverPWD='$password'";
 			$results = mysqli_query($db, $query);
-
 			if (mysqli_num_rows($results) == 1) {
 				$_SESSION['username'] = $username;
 				$_SESSION['role'] = 'driver';
@@ -163,19 +145,16 @@
 	if (isset($_POST['login_admin'])) {
 		$username = mysqli_real_escape_string($db, $_POST['username']);
 		$password = mysqli_real_escape_string($db, $_POST['password']);
-
 		if (empty($username)) {
 			array_push($errors, "Username is required");
 		}
 		if (empty($password)) {
 			array_push($errors, "Password is required");
 		}
-
 		if (count($errors) == 0) {
 			$password = md5($password);
 			$query = "SELECT * FROM Admin WHERE adminID='$username' AND adminPWD='$password'";
 			$results = mysqli_query($db, $query);
-
 			if (mysqli_num_rows($results) == 1) {
 				$_SESSION['username'] = $username;
 				$_SESSION['role'] = 'admin';
@@ -198,7 +177,6 @@
 			$phone_number = mysqli_real_escape_string($db, $_POST['phone_number']);
 			$email_address = mysqli_real_escape_string($db, $_POST['email_address']);
 		}
-
 		if (empty($first_name)) {
 			array_push($errors, "first name is required");
 		}
@@ -214,7 +192,6 @@
 			}
 		}
 		
-
 		if(strlen($first_name) > 20)
 		{
 			array_push($errors, "first name should be less than 20 characters");
@@ -234,7 +211,6 @@
 				array_push($errors, "email should be less than 40 characters");
 			}
 		}
-
 		if (count($errors) == 0) 
 		{
 			if($_SESSION['role'] == 'customer'){
@@ -245,14 +221,12 @@
 				$query = "UPDATE Admin SET firstName = '$first_name', lastName = '$last_name' WHERE adminID = '$username'" ;
 			}
 			
-
 			if (mysqli_query($db, $query)) {
 				$_SESSION['success'] = "Change profile successfully";
 				header('location: index.php');
 			}else {
 				array_push($errors, "can't change your profile, please contact the network administrator");
 			}
-
 		}
 	}
 	
@@ -262,14 +236,12 @@
 		$username = $_SESSION['username'];
 		$reset_password1 = mysqli_real_escape_string($db, $_POST['reset_password1']);
 		$reset_password2 = mysqli_real_escape_string($db, $_POST['reset_password2']);
-
 		if (empty($reset_password1)) {
 			array_push($errors, "Please enter your password");
 		}
 		if (empty($reset_password2)) {
 			array_push($errors, "Please confirm your password");
 		}
-
 		if ($reset_password1 != $reset_password2) {
 			array_push($errors, "The two passwords do not match");
 		}
@@ -284,9 +256,6 @@
 				array_push($errors, "password should be greater than 8 characters");
 			}
 		}
-
-
-
 		if (count($errors) == 0) 
 		{
 			$password = md5($reset_password1);
@@ -297,15 +266,58 @@
 			} else if($_SESSION['role'] == 'admin'){
 				$query = "UPDATE Admin SET adminPWD = '$password' WHERE adminID = '$username'" ;
 			}
-
 			if (mysqli_query($db, $query)) {
 				$_SESSION['success'] = "Reset password successfully";
 				header('location: index.php');
 			}else {
 				array_push($errors, "can't reset your password, please contact the network administrator");
 			}
-
 		}
 	}
-
+	
+	//SCHEDULE TRIP
+	if (isset($_POST['schedule_trip'])) {
+		echo $_SESSION['role'];
+		$username = $_SESSION['username'];
+		$start_addr = mysqli_real_escape_string($db, $_POST['start_addr']);
+		$start_time = mysqli_real_escape_string($db, $_POST['start_time']);
+		$end_addr = mysqli_real_escape_string($db, $_POST['end_addr']);
+		$end_time = mysqli_real_escape_string($db, $_POST['end_time']);
+		$handicap = mysqli_real_escape_string($db, $_POST['handicap']);
+		$seats = mysqli_real_escape_string($db, $_POST['seats']);
+		echo $handicap;
+		$orderID = substr(md5(microtime()),rand(0,26),5);
+		echo $orderID;
+		
+		if($username == null){
+			echo 'Guest';
+		} else if($username != null){
+			echo 'Customer';
+		}
+		/*
+		$query = "INSERT INTO Orders (orderID, customerID, busID, driverID, seatNum, emailAddr,
+			startAddr, startTime, endAddr, endTime, payment) 
+					  
+					  VALUES('$username', '$password', '$first_name', '$last_name', '$phone_number', '$email')";
+		*/
+		/*orderID 	CHAR(5) NOT NULL, 
+		customerID 	INT,
+		busID 		INT NOT NULL,
+		driverID 	INT NOT NULL, 
+		seatNum 	INT NOT NULL,
+		emailAddr	VARCHAR(255),
+			startAddr	VARCHAR(255) NOT NULL,
+			startTime	DATETIME NOT NULL,
+			endAddr		VARCHAR(255) NOT NULL,
+			endTime		DATETIME NOT NULL,
+		payment 	DECIMAL(2,2) NOT NULL,
+		handicap	BIT NOT NULL,
+		seats		INT NOT NULL,
+		PRIMARY KEY (OrderID), 
+		FOREIGN KEY (emailAddr) REFERENCES Guest(emailAddr),
+		FOREIGN KEY (busID) REFERENCES Bus(busID), 
+		FOREIGN KEY (driverID) REFERENCES Driver(driverID), 
+		FOREIGN KEY (customerID) REFERENCES Customer(customerID)
+		*/
+	}
 ?>
