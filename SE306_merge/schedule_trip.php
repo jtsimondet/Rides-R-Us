@@ -55,7 +55,7 @@
 
 		<div class="input-group">
 			<label>Start address</label>
-			<input type="text" name="start_addr" >
+			<input id= "origin-input" class="controls" type="text" placeholder="Enter a starting address" name="start_addr" >
 		</div>
 		<div class="input-group">
 			<label>Start time</label>
@@ -63,7 +63,7 @@
 		</div>
 		<div class="input-group">
 			<label>End address</label>
-			<input type="text" name="end_addr">
+			<input id="destination-input" class="controls" type="text" placeholder="Enter a destination address" name="end_addr">
 		</div>
 		<div class="input-group">
 			<label>End time</label>
@@ -76,6 +76,80 @@
 		<div class="input-group">
 			<label>Number of seats</label>
 			<input type="number" name="seats" >
+		<div id="map"></div>
+		<script>
+			function initMap() {
+				var map = new google.maps.Map(document.getElementById('map'), {
+					mapTypeControl: false,
+					center: {lat: 44.311, lng: *96.798},
+					zoom: 15,
+					mapTypeId: 'roadmap'
+				});
+			}
+			
+			function AutocompleteDirectionsHandler(map) {
+				this.map = map;
+				this.originPlaceId = null;
+				this.destinationPlaceId = null;
+				this.travelMode = 'DRIVING';
+				var originInput = document.getElementById('origin-input');
+				var destinationInput = document.getElementById('destination-input');
+				this.directionsService = new google.maps.DirectionsService;
+				this.directionsDisplay = new google.maps.DirectionsRenderer;
+				this.directionsDisplay.setMap(map);
+				
+				var oroginAutocomplete = new google.maps.places.Autocomplete(
+					originInput, {placeIdOnly: true});
+				var destinationAutocomplete = new google.maps.places.Autocomplete(
+					destinationInput, {placeIdOnly: true});
+				
+				this.setupPlaceChangedListener(originAutocomplete, 'ORIG');
+				this.setupPlaceChangedListener(destinationAutocomplete, 'DEST');
+				
+				this.map.controls.push(originInput);
+				this.map.controls.push(destinationInput);
+			}
+			
+			AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function(autocomplete, mode) {
+				var me = this;
+				autocomplete.bindTo('bounds', this.map);
+				autocomplete.addListener('place_changed', function(){
+					var place = autocomplete.getPlace();
+					if(!place.place_id) {
+						window.alert("Please select an option from the dropdown list.");
+						return;
+					}
+					if(mode == 'ORIG') {
+						me.originPlaceId = place.place_id;
+					}else {
+						me.destinationPlaceId = place.place_id;
+					}
+					me.route();
+				});
+			};
+			
+			AutocompleteDirectionsHandler.prototype.route = function() {
+				if(!this.originPlaceId || !this.destinationPlaceId) {
+					return;
+				}
+				var me = this;
+				
+				this.directionsService.route({
+					origin: {'placeId': this.originPlaceId},
+					destination: {'placeId': this.destinationPlaceId},
+					travelMode: this.travelMode;
+				}, function(response, status) {
+					if(status == 'OK') {
+						me.directionsDisplay.setDirections(response);
+					}else {
+						window.alert('Directions request failed due to' + status);
+					}
+				});
+			};
+		</script>
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxXH4mhMRJIT6Mwy35A0mK7fdaG1JF8lI&libraries=places&callback=initMap" async defer>
+		</script>
+			
 		</div>
 		<div class="input-group">
 			<button type="submit" class="btn" name="schedule_trip">Schedule Trip</button>
