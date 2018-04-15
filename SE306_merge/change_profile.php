@@ -87,10 +87,6 @@
 				<input type="number" name="phone_number">
 			</div>
 			<div class="input-group">
-				<label>email address</label>
-				<input type="email" name="email_address">
-			</div>
-			<div class="input-group">
 				<button type="submit" class="btn" name="profile_change">submit</button>
 			</div>
 		</form>
