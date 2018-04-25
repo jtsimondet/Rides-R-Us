@@ -283,7 +283,6 @@
 	
 	//SCHEDULE TRIP
 	if (isset($_POST['schedule_trip'])) {
-		echo $_SESSION['role'];
 		$username = $_SESSION['username'];
 		$start_addr = mysqli_real_escape_string($db, $_POST['start_addr']);
 		$start_time = mysqli_real_escape_string($db, $_POST['start_time']);
@@ -293,7 +292,7 @@
 		if(isset($_POST['handicap']) && $_POST['handicap'] == 'On'){
 			echo "Need wheelchair access.";
 		} else {
-			echo "Do not Need wheelchair access.";
+			echo "Do not need wheelchair access.";
 		}   
 
 		$seats = mysqli_real_escape_string($db, $_POST['seats']);
@@ -331,5 +330,63 @@
 		FOREIGN KEY (driverID) REFERENCES Driver(driverID), 
 		FOREIGN KEY (customerID) REFERENCES Customer(customerID)
 		*/
+	}
+	
+	//VIEW BUSES
+	if(isset($_POST['view_buses']))
+	{
+		$busID = mysqli_real_escape_string($db, $_POST['busID']);
+		$seatNum = mysqli_real_escape_string($db, $_POST['seatNum']);
+		$busRate = mysqli_real_escape_string($db, $_POST['busRate']);
+		$maintStatus = mysqli_real_escape_string($db, $_POST['maintStatus']);
+		
+	}
+	
+	//ADD BUS
+	if (isset($_POST['add_bus'])) {
+		$busID = mysqli_real_escape_string($db, $_POST['busID']);
+		$seatNum = mysqli_real_escape_string($db, $_POST['seatNum']);
+		$busRate = mysqli_real_escape_string($db, $_POST['busRate']);
+		//$maintStatus = mysqli_real_escape_string($db, $_POST['maintStatus']);
+		//$handicap = mysqli_real_escape_string($db, $_POST['handicap']);
+		if(isset($_POST['maintStatus']) && $_POST['maintStatus'] == 'On'){
+			$maintStatus = 1;
+		} else {
+			$maintStatus = 0;;
+		}   
+
+		if (empty($busID)) { array_push($errors, "There must be a bus ID"); }
+		if (empty($seatNum)) { array_push($errors, "Number of seats must be specified"); }
+		if (empty($busRate)) { array_push($errors, "Bus rate must be specified"); }
+		// first check the database to make sure 
+		// that bus does not already exist
+		$user_check_query = "SELECT * FROM Bus WHERE busID='$busID' LIMIT 1";
+		$result = mysqli_query($db, $user_check_query);
+		$user = mysqli_fetch_assoc($result);
+		
+		if ($user) {
+			array_push($errors, "A bus with that ID already exists");
+		}
+		// other fields error checking
+		if(strlen($busID) != 5)
+		{
+			array_push($errors, "Bus ID must be exactly 5 characters");
+		}
+		if($seatNum < 1)
+		{
+			array_push($errors, "A bus should have at least one seat");
+		}
+		if($busRate < 0)
+		{
+			array_push($errors, "The bus rate cannot be negative");
+		}
+		// add bus if no errors
+		if (count($errors) == 0) {
+			$password = md5($password_1);//encrypt the password before saving in the database
+			$query = "INSERT INTO Bus (busID, seatNum, busRate, maintStatus) 
+					  VALUES('$busID', '$seatNum', '$busRate', '$maintStatus')";
+			mysqli_query($db, $query);
+			header('location: view_buses.php');
+		}
 	}
 ?>
