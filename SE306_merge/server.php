@@ -389,11 +389,6 @@
 	//ADD LOCATION
 	if (isset($_POST['add_location'])) {
 		$locationID = mysqli_real_escape_string($db, $_POST['locationID']);
-		if(isset($_POST['maintStatus']) && $_POST['maintStatus'] == 'On'){
-			$maintStatus = 1;
-		} else {
-			$maintStatus = 0;;
-		}   
 
 		if (empty($locationID)) { array_push($errors, "There must be a location ID"); }
 		elseif(strlen($locationID) > 255){
