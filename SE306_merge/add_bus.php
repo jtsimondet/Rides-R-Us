@@ -21,7 +21,6 @@
 	<div class="header">
 		<h2>Add bus</h2>
 	</div>
-	<div class="content">
 	
 	<form method="post" action="add_bus.php">
 		<?php include('errors.php'); ?>
