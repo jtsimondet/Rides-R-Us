@@ -65,7 +65,7 @@
 		<?php if($_SESSION['role'] == 'admin') : ?>
 			<p>Welcome <strong><?php echo $_SESSION['username']; ?></strong></p>
 			<p><?php echo $_SESSION['role']; ?>
-			<p> <a href="TODO" style="color: blue;">view drivers</a> </p>
+			<p> <a href="view_driver.php" style="color: blue;">view drivers</a> </p>
 			<p> <a href="view_profile.php" style="color: blue;">view profile</a> </p>
 			<p> <a href="reset_password.php" style="color: blue;">reset password</a> </p>
 			<p> <a href="TODO" style="color: blue;">view reports</a> </p>
@@ -73,7 +73,8 @@
 			<p> <a href="TODO" style="color: blue;">remove pickup locations</a> </p>
 			<p> <a href="TODO" style="color: blue;">view bus rates</a> </p>
 			<p> <a href="driver_register.php" style="color: blue;">add a driver</a> </p>
-			<p> <a href="TODO" style="color: blue;">remove a driver</a> </p>
+			<p> <a href="remove_driver.php" style="color: blue;">remove a driver</a> </p>
+			<p> <a href="add_bus.php" style="color: blue;">add a bus</a> </p>
 			<p> <a href="index.php?logout='1'" style="color: red;">logout</a> </p>
 		<?php endif ?>
 

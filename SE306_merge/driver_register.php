@@ -56,6 +56,10 @@
 			<input type="number" name="phone_number">
 		</div>
 		<div class="input-group">
+			<label>Pay Rate</label>
+			<input type="number" name="Pay_rate">
+		</div>
+		<div class="input-group">
 			<button type="submit" class="btn" name="driver_register">Register</button>
 		</div>
 	</form>

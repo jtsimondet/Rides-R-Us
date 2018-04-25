@@ -40,6 +40,10 @@
 			<button type="submit" class="btn" name="reset_password">submit</button>
 		</div>
 	</form>
+
+	<div class="input-group">
+        <p> <a href="index.php" style="color: blue;">home page</a> </p>
+		</div>
 		
 </body>
 </html>

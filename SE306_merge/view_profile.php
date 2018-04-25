@@ -112,6 +112,19 @@
 				<?php 
 				echo $row['emailAddr'];
 				?> </label>
+			<div class="input-group">
+				<label>Membership Status:
+				<?php 
+				if($row['registerStatus'] == 0)
+				{
+					echo "No";
+				}
+				else
+				{
+					echo "Yes";
+				}
+				?> </label>
+			</div>
 			</div>
 		<?php endif ?>
 	</form>

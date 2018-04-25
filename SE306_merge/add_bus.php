@@ -1,51 +1,52 @@
 <?php include('server.php') ?>
 <?php 
-	//session_start(); 
+	session_start(); 
+
 	if (!isset($_SESSION['username'])) {
 		$_SESSION['msg'] = "You must log in first";
 		header('location: login.php');
 	}
+
 	if (isset($_GET['logout'])) {
 		session_destroy();
 		unset($_SESSION['username']);
 		header("location: login.php");
 	}
+
 ?>
+
+
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Add bus</title>
+	<title>Add bus form</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
 	<div class="header">
-		<h2>Add bus</h2>
+		<h2>Add a bus</h2>
 	</div>
 	
-	<form method="post" action="add_bus.php">
+	<form method="post" action="driver_register.php">
+
 		<?php include('errors.php'); ?>
+
 		<div class="input-group">
-			<label>Bus ID (5 characters)</label>
-			<input type="text" name="busID">
+			<label>busID</label>
+			<input type="text" name="username">
 		</div>
 		<div class="input-group">
-			<label>Number of seats:</label>
-			<input type="text" name="seatNum">
+			<label>seatNum</label>
+			<input type="password" name="password_1">
 		</div>
 		<div class="input-group">
-			<label>Bus Rate:</label>
-			<input type="number" name="busRate">
+			<label>busRate</label>
+			<input type="password" name="password_2">
 		</div>
 		<div class="input-group">
-			<label>Maintenance Mode</label>
-			<input type="checkbox" name="maintStatus" value="On" >
-		</div>
-	
-		<div class="input-group">
-			<button type="submit" class="btn" name="add_bus">submit</button>
+			<label>maintStatus</label>
+			<input type="text" name="first_name">
 		</div>
 	</form>
-	
-		
 </body>
 </html>
