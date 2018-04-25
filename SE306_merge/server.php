@@ -356,6 +356,9 @@
 		}   
 
 		if (empty($busID)) { array_push($errors, "There must be a bus ID"); }
+		elseif(strlen($busID) != 5){
+			array_push($errors, "Bus ID must be exactly 5 characters");
+		}
 		if (empty($seatNum)) { array_push($errors, "Number of seats must be specified"); }
 		if (empty($busRate)) { array_push($errors, "Bus rate must be specified"); }
 		// first check the database to make sure 
@@ -366,18 +369,11 @@
 		
 		if ($user) {
 			array_push($errors, "A bus with that ID already exists");
-		}
-		// other fields error checking
-		if(strlen($busID) != 5)
-		{
-			array_push($errors, "Bus ID must be exactly 5 characters");
-		}
-		if($seatNum < 1)
-		{
+		} 
+		if($seatNum < 1){
 			array_push($errors, "A bus should have at least one seat");
 		}
-		if($busRate < 0)
-		{
+		if($busRate < 0){
 			array_push($errors, "The bus rate cannot be negative");
 		}
 		// add bus if no errors
