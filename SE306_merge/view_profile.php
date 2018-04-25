@@ -1,7 +1,6 @@
 <?php include('server.php') ?>
 <?php 
 	//session_start(); 
-
 	if (!isset($_SESSION['username'])) {
 		$_SESSION['msg'] = "You must log in first";
 		header('location: index.php');
@@ -18,13 +17,11 @@
 		$results = mysqli_query($db, $query);
         $row = mysqli_fetch_assoc($results);
 	}
-
 	if (isset($_GET['logout'])) {
 		session_destroy();
 		unset($_SESSION['username']);
 		header("location: login.php");
 	}
-
 ?>
 <!DOCTYPE html>
 <html>
@@ -112,19 +109,6 @@
 				<?php 
 				echo $row['emailAddr'];
 				?> </label>
-			<div class="input-group">
-				<label>Membership Status:
-				<?php 
-				if($row['registerStatus'] == 0)
-				{
-					echo "No";
-				}
-				else
-				{
-					echo "Yes";
-				}
-				?> </label>
-			</div>
 			</div>
 		<?php endif ?>
 	</form>

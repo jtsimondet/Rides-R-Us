@@ -14,31 +14,31 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Add bus</title>
+	<title>Edit bus</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
 	<div class="header">
-		<h2>Add bus</h2>
+		<h2>Edit bus</h2>
 	</div>
 	
 	<form method="post" action="add_bus.php">
 		<?php include('errors.php'); ?>
 		<div class="input-group">
 			<label>Bus ID (5 characters)</label>
-			<input type="text" name="busID">
+			<input type="text" name="busID" value="12345">
 		</div>
 		<div class="input-group">
 			<label>Number of seats:</label>
-			<input type="text" name="seatNum">
+			<input type="text" name="seatNum" value="50">
 		</div>
 		<div class="input-group">
 			<label>Bus Rate:</label>
-			<input type="number" name="busRate">
+			<input type="number" name="busRate" value="50.00">
 		</div>
 		<div class="input-group">
 			<label>Maintenance Mode</label>
-			<input type="checkbox" name="maintStatus" value="On" >
+			<input type="checkbox" name="maintStatus" value="On" <?php echo 'checked="checked"'?>>
 		</div>
 	
 		<div class="input-group">

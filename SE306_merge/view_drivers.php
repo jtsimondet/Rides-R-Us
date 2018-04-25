@@ -6,7 +6,7 @@
 		header('location: index.php');
     }
     else{*/
-		$query = "SELECT * FROM Bus";
+		$query = "SELECT * FROM Driver";
 		$results = mysqli_query($db, $query);
         //$row = mysqli_fetch_array($results);
 	//}
@@ -31,25 +31,22 @@
 	<form method="post" action="view_buses.php">
 		
 		<?php while($row = mysqli_fetch_array($results)){
-			echo '<b>Bus ID: </b>', $row['busID'];
+			echo '<b>Driver ID: </b>', $row['driverID'];
 			echo "<br />";
-			echo '<b>Number of Seats: </b>', $row['seatNum'];
+			echo '<b>First Name: </b>', $row['firstName'];
 			echo "<br />";
-			echo '<b>Bus Rate: </b>', $row['busRate'];
+			echo '<b>Last Name: </b>', $row['lastName'];
 			echo "<br />";
-			if($row['maintStatus']){
-				echo 'In Maintenance';
-				echo "<br />";
-			} else{
-				//echo 'Operational';
-			};
+			echo '<b>Phone #: </b>', $row['phoneNo'];
+			echo "<br />";
+			echo '<b>Pay Rate: </b>', $row['payRate'];
 			echo "<br />";
 		}?>
 	</form>
 	
 		<div class="input-group">
-        <p> <a href="add_bus.php" style="color: blue;">Add Bus</a> </p>
-        <p> <a href="edit_bus.php" style="color: blue;">Edit Bus</a> </p>
+        <p> <a href="driver_register.php" style="color: blue;">Add Driver</a> </p>
+        <p> <a href="edit_driver.php" style="color: blue;">Edit Driver</a> </p>
         <p> <a href="index.php" style="color: blue;">home page</a> </p>
 		</div>
 	<!-- </div> -->
