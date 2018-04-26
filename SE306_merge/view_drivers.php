@@ -28,9 +28,12 @@
 	</div>
 	<!--<div class="content"> -->
 
-	<form method="post" action="view_buses.php">
+	<form method="post" action="view_drivers.php">
+
+	<?php include('errors.php'); ?>
 		
 		<?php while($row = mysqli_fetch_array($results)){
+			echo "<input type=\"checkbox\" name=\"driver_select[]\" value=\"" . $row['driverID'] .  "\">";
 			echo '<b>Driver ID: </b>', $row['driverID'];
 			echo "<br />";
 			echo '<b>First Name: </b>', $row['firstName'];
@@ -41,13 +44,17 @@
 			echo "<br />";
 			echo '<b>Pay Rate: </b>', $row['payRate'];
 			echo "<br />";
-			echo "<br />";
 		}?>
+		<div class="input-group">
+			<button type="submit" class="btn" name="Remove_driver">Remove Driver</button>
+		</div>
+		<div class="input-group">
+			<button type="submit" class="btn" name="Edit_driver_pay_rate">Edit Driver Pay Rate</button>
+		</div>
 	</form>
 	
 		<div class="input-group">
         <p> <a href="driver_register.php" style="color: blue;">Add Driver</a> </p>
-        <p> <a href="edit_driver.php" style="color: blue;">Edit Driver</a> </p>
         <p> <a href="index.php" style="color: blue;">home page</a> </p>
 		</div>
 	<!-- </div> -->

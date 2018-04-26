@@ -1,6 +1,6 @@
 <?php include('server.php') ?>
 <?php 
-	//session_start(); 
+	session_start(); 
 
 	if (!isset($_SESSION['username'])) {
 		$_SESSION['msg'] = "You must log in first";
@@ -17,29 +17,33 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Reset Password</title>
+	<title>Reset password</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
 	<div class="header">
-		<h2>Reset Password</h2>
+		<h2>Reset password</h2>
 	</div>
 	<div class="content">
 
 	<form method="post" action="reset_password.php">
 		<?php include('errors.php'); ?>
 		<div class="input-group">
-			<label>New Password</label>
+			<label>New password</label>
 			<input type="password" name="reset_password1">
 		</div>
 		<div class="input-group">
-			<label>Confirm New Password</label>
+			<label>Confirm password</label>
 			<input type="password" name="reset_password2">
 		</div>
 		<div class="input-group">
 			<button type="submit" class="btn" name="reset_password">submit</button>
 		</div>
 	</form>
+
+	<div class="input-group">
+        <p> <a href="index.php" style="color: blue;">home page</a> </p>
+		</div>
 		
 </body>
 </html>

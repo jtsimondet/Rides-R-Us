@@ -7,8 +7,8 @@
 	$_SESSION['success'] = "";
 
 	// connect to database
-	$db = mysqli_connect('localhost', 'root', '999555aa', 'ridesrus');
-
+	// $db = mysqli_connect('localhost', 'root', '999555aa', 'ridesrus');
+	$db = mysqli_connect('127.0.0.1', 'root', 'sunMINXUAN-', 'SE_306');
 
 	// REGISTER USER
 	if (isset($_POST['cust_reg'])) {
@@ -115,7 +115,75 @@
 			}
 		}
 	}
-	
+
+	//Driver Register
+	if (isset($_POST['driver_register'])) 
+	{
+		// receive all input values from the form
+		$username = mysqli_real_escape_string($db, $_POST['username']);
+		$password_1 = mysqli_real_escape_string($db, $_POST['password_1']);
+		$password_2 = mysqli_real_escape_string($db, $_POST['password_2']);
+		$first_name = mysqli_real_escape_string($db, $_POST['first_name']);
+		$last_name = mysqli_real_escape_string($db, $_POST['last_name']);
+		$phone_number = mysqli_real_escape_string($db, $_POST['phone_number']);
+		$Pay_rate = mysqli_real_escape_string($db, $_POST['Pay_rate']);
+		if ($password_1 != $password_2) {
+			array_push($errors, "The two passwords do not match");
+		}
+		// first check the database to make sure 
+		// a user does not already exist with the same username and/or email
+		$user_check_query = "SELECT * FROM Driver WHERE driverID='$username' LIMIT 1";
+		$result = mysqli_query($db, $user_check_query);
+		$user = mysqli_fetch_assoc($result);
+		
+		if ($user) { // if user exists
+			if ($user['driverID'] === $username) {
+			array_push($errors, "Username already exists");
+			}
+		}
+		// other fields error checking
+		if(strlen($username) > 20)
+		{
+			array_push($errors, "username should be less than 20 characters");
+		}
+		if(strlen($username) < 6)
+		{
+			array_push($errors, "username should be greater than 6 characters");
+		}
+		if(strlen($password_1) > 20)
+		{
+			array_push($errors, "password should be less than 20 characters");
+		}
+		if(strlen($password_1) < 6)
+		{
+			array_push($errors, "password should be greater than 6 characters");
+		}
+		if(strlen($first_name) > 20)
+		{
+			array_push($errors, "first name should be less than 20 characters");
+		}
+		if(strlen($last_name) > 20)
+		{
+			array_push($errors, "last name should be less than 20 characters");
+		}
+		if($phone_number > 10000000000 || $phone_number < 999999999 && !empty($phone_number))
+		{
+			array_push($errors, "error format of phone number");
+		}
+		if(strlen($email) > 40)
+		{
+			array_push($errors, "email should be less than 40 characters");
+		}
+		// register user if there are no errors in the form
+		if (count($errors) == 0) {
+			$password = md5($password_1);//encrypt the password before saving in the database
+			$query = "INSERT INTO Driver (driverID, driverPWD, firstName, lastName, phoneNo, payRate) 
+					  VALUES('$username', '$password', '$first_name', '$last_name', '$phone_number', '$Pay_rate')";
+			mysqli_query($db, $query);
+			header('location: index.php');
+		}
+	}
+
 	//DRIVER LOGIN
 	if (isset($_POST['login_driver'])) {
 		$username = mysqli_real_escape_string($db, $_POST['username']);
@@ -208,7 +276,7 @@
 		}
 		
 		if($_SESSION['role'] == 'customer' OR $_SESSION['role'] == 'driver'){
-			if($phone_number > 10000000000 || $phone_number < 999999999)
+			if($phone_number > 10000000000 && $phone_number < 999999999)
 			{
 				array_push($errors, "error format of phone number");
 			}
@@ -399,6 +467,27 @@
 					  VALUES('$busID', '$seatNum', '$busRate', '$maintStatus')";
 			mysqli_query($db, $query);
 			header('location: view_buses.php');
+		}
+	}
+
+	//Remove Driver
+	if (isset($_POST['Remove_driver']) && isset($_POST['driver_select'])) {
+		$count = 0;
+		while($count < count($_POST['driver_select']))
+		{	
+			$driverID =  $_POST['driver_select'][$count];
+			$query = "DELETE FROM Driver WHERE driverID = '$driverID'";
+			if(mysqli_query($db, $query))
+			{
+				$_SESSION['success'] = "Remove driver successfully!";
+				header('location: view_drivers.php');
+			}
+			else{
+				echo "wtf";
+				$_SESSION['success'] = "Can't remove driver!";
+				header('location: view_drivers.php');
+			}
+			$count = $count + 1;
 		}
 	}
 ?>
