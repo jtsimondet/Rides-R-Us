@@ -74,8 +74,6 @@
 			<p> <a href="TODO" style="color: blue;">remove pickup locations</a> </p>
 			<!-- view pickup locations -->
 			<p> <a href="view_buses.php" style="color: blue;">view buses</a> </p>
-			<p> <a href="driver_register.php" style="color: blue;">add a driver</a> </p>
-			<p> <a href="TODO" style="color: blue;">remove a driver</a> </p>
 			<p> <a href="index.php?logout='1'" style="color: red;">logout</a> </p>
 		<?php endif ?>
 

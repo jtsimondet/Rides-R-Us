@@ -61,6 +61,7 @@
 		</div>
 		<div class="input-group">
 			<button type="submit" class="btn" name="driver_register">Register</button>
+			<button type="submit" class="btn" name="cancel">Cancel</button>
 		</div>
 	</form>
 </body>

@@ -490,4 +490,38 @@
 			$count = $count + 1;
 		}
 	}
+	else if(isset($_POST['Remove_driver']) && !isset($_POST['driver_select']))
+	{
+		array_push($errors, "Please select driver!");
+	}
+
+	//set driver pay rate
+	if (isset($_POST['submit_Edit_driver_pay_rate'])){
+		echo "hello";
+		$count = 0;
+		while($count < count($_POST['driver_select']))
+		{	
+			$driverID =  $_POST['driver_select'][$count];
+			$payRate = $_POST['driver_select_edit_pay_rate'][$count];
+			$query = "UPDATE  Driver SET payRate = $payRate WHERE driverID = '$driverID'";
+			echo $query;
+			if(mysqli_query($db, $query))
+			{
+				$_SESSION['success'] = "Set driver pay rate successfully!";
+				header('location: view_drivers.php');
+			}
+			else{
+				echo "wtf";
+				$_SESSION['success'] = "Can't set driver pay rate driver!";
+				header('location: view_drivers.php');
+			}
+			$count = $count + 1;
+		}
+	}
+
+	//cancel --- go back to home page
+	if (isset($_POST['cancel']))
+	{
+		header('location: index.php');
+	}
 ?>
