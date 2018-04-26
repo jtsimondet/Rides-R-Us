@@ -283,53 +283,69 @@
 	
 	//SCHEDULE TRIP
 	if (isset($_POST['schedule_trip'])) {
-		$username = $_SESSION['username'];
+		$role = null;
+		if(isset($_SESSION['role'])){
+			$role = $_SESSION['role'];
+		}
+		$email = mysqli_real_escape_string($db, $_POST['email']);
 		$start_addr = mysqli_real_escape_string($db, $_POST['start_addr']);
-		$start_time = mysqli_real_escape_string($db, $_POST['start_time']);
 		$end_addr = mysqli_real_escape_string($db, $_POST['end_addr']);
-		$end_time = mysqli_real_escape_string($db, $_POST['end_time']);
-		//$handicap = mysqli_real_escape_string($db, $_POST['handicap']);
+		$start_time = mysqli_real_escape_string($db, $_POST['start_time']);
+		$seat_num = mysqli_real_escape_string($db, $_POST['seat_num']);
 		if(isset($_POST['handicap']) && $_POST['handicap'] == 'On'){
-			echo "Need wheelchair access.";
+			$handicap = 1;
 		} else {
-			echo "Do not need wheelchair access.";
+			$handicap = 0;
 		}   
 
-		$seats = mysqli_real_escape_string($db, $_POST['seats']);
-		//echo $handicap;
 		$orderID = substr(md5(microtime()),rand(0,26),5);
-		echo $orderID;
 		
-		if($username == null){
-			echo 'Guest';
-		} else if($username != null){
-			echo 'Customer';
+		// form validation: ensure that the form is correctly filled
+		if (empty($email) and ($role == null)) { array_push($errors, "Email is required if not logged in"); }
+		if (empty($start_addr)) { array_push($errors, "Pick-up Address is required"); }
+		if (empty($end_addr)) { array_push($errors, "Destination is required"); }
+		if (empty($start_time)) { array_push($errors, "Pick-up time is required"); }
+		if ($seat_num < 1) { array_push($errors, "Must order at least 1 seat"); }
+
+		// other fields error checking
+		if(strlen($email) > 40)
+		{
+			array_push($errors, "email should be less than 40 characters");
 		}
-		/*
-		$query = "INSERT INTO Orders (orderID, customerID, busID, driverID, seatNum, emailAddr,
-			startAddr, startTime, endAddr, endTime, payment) 
+		if(strlen($start_addr) > 255)
+		{
+			array_push($errors, "pick-up address is too long");
+		}
+		if(strlen($end_addr) > 255)
+		{
+			array_push($errors, "destination address is too long");
+		}
+		$today = date("Y-m-d H:i:s");
+		if($start_time < $today){
+			array_push($errors, "That time is too soon");
+		}
+		if($seat_num > 20){
+			array_push($errors, "too many seats ordered");
+		}
+		//add trip if there are no errors in the form
+		if (count($errors) == 0) {
+			if($role){
+				$query = "INSERT INTO CustomerTrip (customerID, busID, driverID, 
+						startAddr, startTime, endAddr, handicap, seats)
 					  
-					  VALUES('$username', '$password', '$first_name', '$last_name', '$phone_number', '$email')";
-		*/
-		/*orderID 	CHAR(5) NOT NULL, 
-		customerID 	INT,
-		busID 		INT NOT NULL,
-		driverID 	INT NOT NULL, 
-		seatNum 	INT NOT NULL,
-		emailAddr	VARCHAR(255),
-			startAddr	VARCHAR(255) NOT NULL,
-			startTime	DATETIME NOT NULL,
-			endAddr		VARCHAR(255) NOT NULL,
-			endTime		DATETIME NOT NULL,
-		payment 	DECIMAL(2,2) NOT NULL,
-		handicap	BIT NOT NULL,
-		seats		INT NOT NULL,
-		PRIMARY KEY (OrderID), 
-		FOREIGN KEY (emailAddr) REFERENCES Guest(emailAddr),
-		FOREIGN KEY (busID) REFERENCES Bus(busID), 
-		FOREIGN KEY (driverID) REFERENCES Driver(driverID), 
-		FOREIGN KEY (customerID) REFERENCES Customer(customerID)
-		*/
+						VALUES('$username', '$bus', '$driver', '$start_addr', 
+						'$start_time', '$end_addr', '$handicap, $seat_num)";
+			} else{
+				$query = "INSERT INTO GuestTrip (emailAddr, busID, driverID, 
+						startAddr, startTime, endAddr, handicap, seats)
+						
+						VALUES('$email', '$bus', '$driver', '$start_addr', 
+						'$start_time', '$end_addr', '$handicap, $seat_num)";
+			}
+			mysqli_query($db, $query);
+			$_SESSION['success'] = "Trip scheduled!";
+			header('location: index.php');
+		}
 	}
 	
 	//VIEW BUSES
@@ -383,30 +399,6 @@
 					  VALUES('$busID', '$seatNum', '$busRate', '$maintStatus')";
 			mysqli_query($db, $query);
 			header('location: view_buses.php');
-		}
-	}
-	
-	//ADD LOCATION
-	if (isset($_POST['add_location'])) {
-		$locationID = mysqli_real_escape_string($db, $_POST['locationID']);
-
-		if (empty($locationID)) { array_push($errors, "There must be a location ID"); }
-		elseif(strlen($locationID) > 255){
-			array_push($errors, "Location must be under 255 characters");
-		}
-		// first check the database to make sure 
-		// that location does not already exist
-		$user_check_query = "SELECT * FROM PickupLocation WHERE locationID='$locationID' LIMIT 1";
-		$result = mysqli_query($db, $user_check_query);
-		$user = mysqli_fetch_assoc($result);
-		
-		// add location if no errors
-		if (count($errors) == 0) {
-			$password = md5($password_1);//encrypt the password before saving in the database
-			$query = "INSERT INTO PickupLocation (locationID) 
-					  VALUES('$locationID')";
-			mysqli_query($db, $query);
-			header('location: view_locations.php');
 		}
 	}
 ?>
