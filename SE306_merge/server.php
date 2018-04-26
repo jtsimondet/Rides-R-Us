@@ -208,7 +208,7 @@
 		}
 		
 		if($_SESSION['role'] == 'customer' OR $_SESSION['role'] == 'driver'){
-			if($phone_number > 10000000000 && $phone_number < 999999999)
+			if($phone_number > 10000000000 || $phone_number < 999999999)
 			{
 				array_push($errors, "error format of phone number");
 			}
