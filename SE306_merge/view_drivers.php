@@ -19,12 +19,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>View Bus</title>
+	<title>View Driver</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
 	<div class="header">
-		<h2>View Bus Page</h2>
+		<h2>View Driver Page</h2>
 	</div>
 	<!--<div class="content"> -->
 
@@ -40,6 +40,7 @@
 			echo '<b>Phone #: </b>', $row['phoneNo'];
 			echo "<br />";
 			echo '<b>Pay Rate: </b>', $row['payRate'];
+			echo "<br />";
 			echo "<br />";
 		}?>
 	</form>
