@@ -55,8 +55,8 @@
 			<p>Welcome <strong><?php echo $_SESSION['username']; ?></strong></p>
 			<p><?php echo $_SESSION['role']; ?>
 			<p> <a href="view_profile.php" style="color: blue;">view profile</a> </p>
+			<p> <a href="send_notification" style="color: blue;">send notification</a> </p>
 			<p> <a href="TODO" style="color: blue;">message customer</a> </p>
-			<p> <a href="TODO" style="color: blue;">send notifications</a> </p>
 			<p> <a href="TODO" style="color: blue;">view schedule</a> </p>
 			<p> <a href="TODO" style="color: blue;">submit switch hours form</a> </p>
 			<p> <a href="index.php?logout='1'" style="color: red;">logout</a> </p>
@@ -66,7 +66,9 @@
 		<?php if($_SESSION['role'] == 'admin') : ?>
 			<p>Welcome <strong><?php echo $_SESSION['username']; ?></strong></p>
 			<p><?php echo $_SESSION['role']; ?>
-			<p> <a href="view_drivers" style="color: blue;">view drivers</a> </p>
+			<p> <a href="view_drivers.php" style="color: blue;">view drivers</a> </p>
+			<p> <a href="send_notification" style="color: blue;">send notification</a> </p>
+			<p> <a href="edit_driver_pay_rate.php" style="color: blue;">Edit driver pay rate</a> </p>
 			<p> <a href="view_profile.php" style="color: blue;">view profile</a> </p>
 			<p> <a href="reset_password.php" style="color: blue;">reset password</a> </p>
 			<p> <a href="TODO" style="color: blue;">view reports</a> </p>

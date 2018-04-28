@@ -43,6 +43,7 @@
 	
 		<div class="input-group">
 			<button type="submit" class="btn" name="add_bus">submit</button>
+			<button type="submit" class="btn" name="cancel">cancel</button>
 		</div>
 	</form>
 	

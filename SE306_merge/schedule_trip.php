@@ -86,9 +86,6 @@
 		<div class="input-group">
 			<button type="submit" class="btn" name="schedule_trip">Schedule Trip</button>
 		</div>
-		<p>
-			Not yet a member? <a href="customer_register.php">Sign up</a>
-		</p>
 		
 		<form>
     <script>
