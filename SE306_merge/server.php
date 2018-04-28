@@ -7,8 +7,8 @@
 	$_SESSION['success'] = "";
 
 	// connect to database
-	// $db = mysqli_connect('localhost', 'root', '999555aa', 'ridesrus');
-	$db = mysqli_connect('127.0.0.1', 'root', 'sunMINXUAN-', 'SE_306');
+	$db = mysqli_connect('localhost', 'root', '999555aa', 'ridesrus');
+	// $db = mysqli_connect('127.0.0.1', 'root', 'sunMINXUAN-', 'SE_306');
 
 	// REGISTER USER
 	if (isset($_POST['cust_reg'])) {
@@ -243,7 +243,6 @@
 	// merged change profile
 	if(isset($_POST['profile_change']))
 	{
-		echo $_SESSION['role'];
 		$username = $_SESSION['username'];
 		$first_name = mysqli_real_escape_string($db, $_POST['first_name']);
 		$last_name = mysqli_real_escape_string($db, $_POST['last_name']);
@@ -464,7 +463,8 @@
 		if (count($errors) == 0) {
 			$password = md5($password_1);//encrypt the password before saving in the database
 			$query = "INSERT INTO Bus (busID, seatNum, busRate, maintStatus) 
-					  VALUES('$busID', '$seatNum', '$busRate', '$maintStatus')";
+					  VALUES('$busID', '$seatNum', '$busRate', $maintStatus)";
+
 			mysqli_query($db, $query);
 			header('location: view_buses.php');
 		}
@@ -480,12 +480,11 @@
 			if(mysqli_query($db, $query))
 			{
 				$_SESSION['success'] = "Remove driver successfully!";
-				header('location: view_drivers.php');
+				header('location: index.php');
 			}
 			else{
-				echo "wtf";
 				$_SESSION['success'] = "Can't remove driver!";
-				header('location: view_drivers.php');
+				header('location: index.php');
 			}
 			$count = $count + 1;
 		}
@@ -495,33 +494,33 @@
 		array_push($errors, "Please select driver!");
 	}
 
-	//set driver pay rate
-	if (isset($_POST['submit_Edit_driver_pay_rate'])){
-		echo "hello";
-		$count = 0;
-		while($count < count($_POST['driver_select']))
-		{	
-			$driverID =  $_POST['driver_select'][$count];
-			$payRate = $_POST['driver_select_edit_pay_rate'][$count];
-			$query = "UPDATE  Driver SET payRate = $payRate WHERE driverID = '$driverID'";
-			echo $query;
-			if(mysqli_query($db, $query))
-			{
-				$_SESSION['success'] = "Set driver pay rate successfully!";
-				header('location: view_drivers.php');
-			}
-			else{
-				echo "wtf";
-				$_SESSION['success'] = "Can't set driver pay rate driver!";
-				header('location: view_drivers.php');
-			}
-			$count = $count + 1;
-		}
-	}
-
 	//cancel --- go back to home page
 	if (isset($_POST['cancel']))
 	{
 		header('location: index.php');
+	}
+
+	//send message to customoer
+	if(isset($_POST['send_message']))
+	{
+		$customerID = $_POST['customer_id'];
+		$message = $_POST['comment'];
+		$query = "SELECT * FROM Customer WHERE customerID = '$customerID'";
+		$results = mysqli_query($db, $query);
+		$row = mysqli_fetch_array($results);
+		$email = $row['emailAddr'];
+
+		if(mail($email,"RIDE R US", $message))
+		{
+			$_SESSION['success'] = "send messsage successfully";
+			header('location: index.php');
+		}
+		else
+		{
+			$_SESSION['success'] = "send messsage failed";
+			header('location: index.php');
+		}
+
+		
 	}
 ?>
