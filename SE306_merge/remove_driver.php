@@ -6,11 +6,11 @@
 		$_SESSION['msg'] = "You must log in first";
 		header('location: admin_login.php');
     }
-    else if($_SESSION['role'] != "admin")
+    /*else if($_SESSION['role'] != "admin")
     {
         $_SESSION['msg'] = "You don't have privilige to view this page.";
         header('location: index.php');
-    }
+    }*/
 
 ?>
 <!DOCTYPE html>

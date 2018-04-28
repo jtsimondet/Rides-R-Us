@@ -32,32 +32,27 @@
 
 	<?php include('errors.php'); ?>
 		
-		<?php 
-			while($row = mysqli_fetch_array($results)){
-				echo "<input type=\"checkbox\" name=\"driver_select[]\" value=\"" . $row['driverID'] .  "\">";
-				echo '<b>Driver ID: </b>', $row['driverID'];
-				echo "<br />";
-				echo '<b>First Name: </b>', $row['firstName'];
-				echo "<br />";
-				echo '<b>Last Name: </b>', $row['lastName'];
-				echo "<br />";
-				echo '<b>Phone #: </b>', $row['phoneNo'];
-				echo "<br />";
-				echo '<b>Pay Rate: </b>', $row['payRate'];
-				echo "<br />";
-			}
-
-			echo
-			"<div class=\"input-group\">
-				<button type=\"submit\" class=\"btn\" name=\"Remove_driver\">Remove Driver</button>
-			</div>";
-		?>
-	</form>
-	
-		<div class="input-group">
-        <p> <a href="driver_register.php" style="color: blue;">Add Driver</a> </p>
-        <p> <a href="index.php" style="color: blue;">home page</a> </p>
+		<?php while($row = mysqli_fetch_array($results)){
+			echo "<input type=\"checkbox\" name=\"driver_select[]\" value=\"" . $row['driverID'] .  "\">";
+			echo '<b>Driver ID: </b>', $row['driverID'];
+			echo "<br />";
+			echo '<b>First Name: </b>', $row['firstName'];
+			echo "<br />";
+			echo '<b>Last Name: </b>', $row['lastName'];
+			echo "<br />";
+			echo '<b>Phone #: </b>', $row['phoneNo'];
+			echo "<br />";
+			echo '<b>Pay Rate: </b>', $row['payRate'];
+			echo "<br />";
+		}?>
+		<form method="post" action="remove_driver.php">
+        <div class="input-group">
+			<button type="submit" class="btn" name="add_driver_redirect">Add Driver</button>
+			<button type="submit" class="btn" name="edit_driver_redirect">Edit Driver</button>
+			<button type="submit" class="btn" name="remove_driver">Remove Driver</button>
+			<button class="btn" name="home_page">Homepage</button>
 		</div>
-		
+		</form>
+	</form>
 </body>
 </html>

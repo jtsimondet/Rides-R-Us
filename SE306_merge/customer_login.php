@@ -2,13 +2,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Registration system PHP and MySQL</title>
+	<title>Customer Login</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
 
 	<div class="header">
-		<h2>Login</h2>
+		<h2>Customer Login</h2>
 	</div>
 	
 	<form method="post" action="customer_login.php">
@@ -25,6 +25,9 @@
 		</div>
 		<div class="input-group">
 			<button type="submit" class="btn" name="login_customer">Login</button>
+		</div>
+		<div class="input-group">
+			<button type="submit" class="btn" name="home_page">Return to Homepage</button>
 		</div>
 		<p>
 			Not yet a member? <a href="customer_register.php">Sign up</a>

@@ -14,32 +14,41 @@
 	}
 
 ?>
+
+
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Reset Password</title>
+	<title>Admin Registration Form</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
 	<div class="header">
-		<h2>Reset Password</h2>
+		<h2>Admin Register</h2>
 	</div>
-	<div class="content">
+	
+	<form method="post" action="admin_register.php">
 
-	<form method="post" action="reset_password.php">
 		<?php include('errors.php'); ?>
+
 		<div class="input-group">
-			<label>New Password</label>
-			<input type="password" name="reset_password1">
+			<label>Username</label>
+			<input type="text" name="username" value="<?php echo $username; ?>">
 		</div>
 		<div class="input-group">
-			<label>Confirm New Password</label>
-			<input type="password" name="reset_password2">
+			<label>Password</label>
+			<input type="password" name="password_1">
 		</div>
 		<div class="input-group">
-			<button type="submit" class="btn" name="reset_password">submit</button>
+			<label>Confirm password</label>
+			<input type="password" name="password_2">
+		</div>
+		<div class="input-group">
+			<button type="submit" class="btn" name="admin_reg">Register</button>
+		</div>
+		<div class="input-group">
+			<button type="submit" class="btn" name="home_page">Return to Homepage</button>
 		</div>
 	</form>
-		
 </body>
 </html>

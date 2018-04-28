@@ -1,6 +1,6 @@
 <?php include('server.php') ?>
 <?php 
-	session_start(); 
+	//session_start(); 
 
 	if (!isset($_SESSION['username'])) {
 		$_SESSION['msg'] = "You must log in first";
@@ -57,11 +57,13 @@
 		</div>
 		<div class="input-group">
 			<label>Pay Rate</label>
-			<input type="number" name="Pay_rate">
+			<input type="number" name="pay_rate">
 		</div>
 		<div class="input-group">
-			<button type="submit" class="btn" name="driver_register">Register</button>
-			<button type="submit" class="btn" name="cancel">Cancel</button>
+			<button type="submit" class="btn" name="driver_reg">Register</button>
+		</div>
+		<div class="input-group">
+			<button type="submit" class="btn" name="home_page">Return to Homepage</button>
 		</div>
 	</form>
 </body>

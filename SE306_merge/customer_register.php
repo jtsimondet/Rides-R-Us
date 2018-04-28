@@ -8,6 +8,8 @@
 <body>
 	<div class="header">
 		<h2>Customer Register</h2>
+		
+		<h4>* indicates required fields</h4>
 	</div>
 	
 	<form method="post" action="customer_register.php">
@@ -15,19 +17,19 @@
 		<?php include('errors.php'); ?>
 
 		<div class="input-group">
-			<label>Username</label>
+			<label>Username*</label>
 			<input type="text" name="username" value="<?php echo $username; ?>">
 		</div>
 		<div class="input-group">
-			<label>Email</label>
+			<label>Email*</label>
 			<input type="email" name="email" value="<?php echo $email; ?>">
 		</div>
 		<div class="input-group">
-			<label>Password</label>
+			<label>Password*</label>
 			<input type="password" name="password_1">
 		</div>
 		<div class="input-group">
-			<label>Confirm password</label>
+			<label>Confirm password*</label>
 			<input type="password" name="password_2">
 		</div>
 		<div class="input-group">
@@ -40,10 +42,13 @@
 		</div>
 		<div class="input-group">
 			<label>Phone number</label>
-			<input type="number" name="phone_number">
+			<input type="number" name="phone_number" value="<?php echo $phone_number; ?>">
 		</div>
 		<div class="input-group">
 			<button type="submit" class="btn" name="cust_reg">Register</button>
+		</div>
+		<div class="input-group">
+			<button type="submit" class="btn" name="home_page">Return to Homepage</button>
 		</div>
 		<p>
 			Already a member? <a href="customer_login.php">Sign in</a>

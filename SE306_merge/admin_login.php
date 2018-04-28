@@ -26,6 +26,9 @@
 		<div class="input-group">
 			<button type="submit" class="btn" name="login_admin">Login</button>
 		</div>
+		<div class="input-group">
+			<button type="submit" class="btn" name="home_page">Return to Homepage</button>
+		</div>
 	</form>
 
 

@@ -31,13 +31,14 @@
 	<form method="post" action="view_buses.php">
 		
 		<?php while($row = mysqli_fetch_array($results)){
+			echo "<input type=\"checkbox\" name=\"bus_select[]\" value=\"" . $row['busID'] .  "\">";
 			echo '<b>Bus ID: </b>', $row['busID'];
 			echo "<br />";
 			echo '<b>Number of Seats: </b>', $row['seatNum'];
 			echo "<br />";
 			echo '<b>Bus Rate: </b>', $row['busRate'];
 			echo "<br />";
-			if($row['maintStatus']){
+			if($row['maintStatus'] == 1){
 				echo 'In Maintenance';
 				echo "<br />";
 			} else{
@@ -45,14 +46,12 @@
 			};
 			echo "<br />";
 		}?>
-	</form>
-	
 		<div class="input-group">
-        <p> <a href="add_bus.php" style="color: blue;">Add Bus</a> </p>
-        <p> <a href="edit_bus.php" style="color: blue;">Edit Bus</a> </p>
-        <p> <a href="index.php" style="color: blue;">home page</a> </p>
+			<button type="submit" class="btn" name="add_bus_redirect">Add Bus</button>
+			<button type="submit" class="btn" name="edit_bus_redirect">Edit Bus</button>
+			<button type="submit" class="btn" name="remove_bus">Remove Bus</button>
+			<button class="btn" name="home_page">Homepage</button>
 		</div>
-	<!-- </div> -->
-		
+	</form>
 </body>
 </html>

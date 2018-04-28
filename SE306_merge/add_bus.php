@@ -38,12 +38,14 @@
 		</div>
 		<div class="input-group">
 			<label>Maintenance Mode</label>
-			<input type="checkbox" name="maintStatus" value="On" >
+			<input type="checkbox" name="maintStatus" value="Off" >
 		</div>
 	
 		<div class="input-group">
-			<button type="submit" class="btn" name="add_bus">submit</button>
-			<button type="submit" class="btn" name="cancel">cancel</button>
+			<button type="submit" class="btn" name="add_bus">Submit</button>
+		</div>
+		<div class="input-group">
+			<button type="submit" class="btn" name="home_page">Return to Homepage</button>
 		</div>
 	</form>
 	
